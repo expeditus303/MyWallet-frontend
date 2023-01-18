@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-export default function NewIncome() {
+export default function NewExpense() {
   return (
     <>
       <NewContainer>
         <TopContainer>
-          <h1>New income</h1>
+          <h1>New expense</h1>
         </TopContainer>
 
         <Input placeholder="value" />
         <Input placeholder="description" />
-        <Button>Save income</Button>
+        <Button>Save expense</Button>
       </NewContainer>
     </>
   );

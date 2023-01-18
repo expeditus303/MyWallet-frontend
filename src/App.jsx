@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import GlobalStyle from "./assets/GlobalStyle";
 import Home from "./pages/Home";
+import NewExpense from "./pages/NewExpense";
 import NewIncome from "./pages/NewIncome";
 import SignIn from "./pages/SignIn";
 import SignUP from "./pages/SignUp";
@@ -14,7 +15,8 @@ function App() {
       {/* <SignIn /> */}
       {/* <SignUP /> */}
       {/* <Home /> */}
-      <NewIncome />
+      {/* <NewIncome /> */}
+      <NewExpense />
       </Body>
     </>
   );
