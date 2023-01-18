@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import GlobalStyle from "./assets/GlobalStyle";
+import Home from "./pages/Home";
+import NewIncome from "./pages/NewIncome";
 import SignIn from "./pages/SignIn";
 import SignUP from "./pages/SignUp";
 
@@ -10,7 +12,9 @@ function App() {
       <GlobalStyle />
       <Body>
       {/* <SignIn /> */}
-      <SignUP />
+      {/* <SignUP /> */}
+      {/* <Home /> */}
+      <NewIncome />
       </Body>
     </>
   );
@@ -21,6 +25,7 @@ export default App;
 const Body = styled.div`
   height: 100vh;
   width: 375px;
+  /* width: 100%; */
   margin: auto;
   background-color: #8C11BE;
 
