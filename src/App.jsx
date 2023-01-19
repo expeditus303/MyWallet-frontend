@@ -14,9 +14,9 @@ function App() {
       <Body>
       {/* <SignIn /> */}
       {/* <SignUP /> */}
-      {/* <Home /> */}
+      <Home />
       {/* <NewIncome /> */}
-      <NewExpense />
+      {/* <NewExpense /> */}
       </Body>
     </>
   );

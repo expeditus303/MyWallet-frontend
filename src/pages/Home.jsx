@@ -3,6 +3,24 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
 export default function Home() {
+  const DATA = [
+    {
+      date: "16/01",
+      description: "Parafina",
+      value: 12.50,
+    },
+    {
+      date: "17/01",
+      description: "Estacionamento joaca",
+      value: 18,
+    },
+    {
+      date: "18/01",
+      description: "Almoço mãe",
+      value: 39.9,
+    }
+  ];
+
   return (
     <>
       <HomeContainer>
@@ -11,10 +29,18 @@ export default function Home() {
           <RiLogoutBoxRLine />
         </TopBottomContainer>
 
-        <Registers>
-          <div>
+        {/* <Registers>
+          <div id="empty">
             <p>Não há registros de entrada ou saída</p>
           </div>
+        </Registers> */}
+
+        <Registers>
+          <RegisteredData>
+            <p>18/01</p>
+            <p>Almoço mãe</p>
+            <p>39.90</p>
+          </RegisteredData>
         </Registers>
 
         <TopBottomContainer>
@@ -67,10 +93,10 @@ const Registers = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  div {
+  div#empty {
     width: 180px;
 
     p {
@@ -80,6 +106,16 @@ const Registers = styled.div`
       text-align: center;
     }
   }
+
+  div#registered {
+  }
+`;
+
+const RegisteredData = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: deeppink;
 `;
 
 const NewInOutButton = styled.button`
