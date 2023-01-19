@@ -33,7 +33,6 @@ const TopContainer = styled.div`
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;
-  
 `;
 
 const Input = styled.input`
@@ -45,6 +44,20 @@ const Input = styled.input`
   margin-top: 15px;
   padding-left: 15px;
   box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Raleway";
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 
   ::placeholder {
     font-size: 20px;

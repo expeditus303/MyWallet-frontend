@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyle from "./assets/GlobalStyle";
 import Home from "./pages/Home";
@@ -6,40 +8,27 @@ import NewIncome from "./pages/NewIncome";
 import SignIn from "./pages/SignIn";
 import SignUP from "./pages/SignUp";
 
+import { DATA_REGISTERS } from "./DATA";
 
 function App() {
-
-  const DATA = [
-    {
-      date: "16/01",
-      description: "Parafina",
-      value: 12.5,
-      type: "expense",
-    },
-    {
-      date: "17/01",
-      description: "Estacionamento joaca",
-      value: 18.0,
-      type: "expense",
-    },
-    {
-      date: "18/01",
-      description: "Salário",
-      value: 30000.0,
-      type: "income",
-    },
-  ];
+  
+  const [registeredData, setRegisteredData] = useState(DATA_REGISTERS)
+  
 
   return (
     <>
-      <GlobalStyle />
-      <Body>
-      {/* <SignIn /> */}
-      {/* <SignUP /> */}
-      <Home DATA={DATA}/>
-      {/* <NewIncome /> */}
-      {/* <NewExpense /> */}
-      </Body>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Body>
+          <Routes>
+            <Route path="/" element={<SignIn />}/>
+            <Route path="/cadastro" element={<SignUP />}/>
+            <Route path="/home" element={<Home registeredData={registeredData} />}/>
+            <Route path="/nova-entrada" element={<NewIncome registeredData={registeredData} setRegisteredData={setRegisteredData}/>}/>
+            <Route path="/nova-saida" element={<NewExpense /> }/>
+          </Routes>
+        </Body>
+      </BrowserRouter>
     </>
   );
 }
@@ -51,11 +40,11 @@ const Body = styled.div`
   width: 375px;
   /* width: 100%; */
   margin: auto;
-  background-color: #8C11BE;
+  background-color: #8c11be;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
   font-family: "Raleway";
-`
+`;

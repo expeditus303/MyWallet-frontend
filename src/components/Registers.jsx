@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function Registers(props) {
 
-  const { DATA } = props
+  const { registeredData } = props
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Registers(props) {
         </EmptyRegisters> */}
 
         <RegisteredData>
-          {DATA.map((d) => (
+          {registeredData.map((d) => (
             <RegisteredDataIndividual>
               <div>
                 <p id="date">{d.date}</p>

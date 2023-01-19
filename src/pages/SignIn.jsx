@@ -1,13 +1,35 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("teste");
+  const [password, setPassword] = useState("");
+
+  function login(event) {
+    event.preventDefault();
+  }
+
   return (
     <>
       <SignInContainer>
         <h1>MyWallet</h1>
-        <Input placeholder="e-mail" />
-        <Input placeholder="password" />
-        <Button>Sign In</Button>
+        <form onSubmit={login}>
+          <Input
+            type="email"
+            name="email"
+            placeholder="e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">Sign In</Button>
+        </form>
 
         <p>First time? $ign Up!</p>
       </SignInContainer>
@@ -28,6 +50,12 @@ const SignInContainer = styled.div`
     margin-bottom: 10px;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   p {
     margin-top: 35px;
     font-weight: 700;
@@ -45,6 +73,8 @@ const Input = styled.input`
   margin-top: 15px;
   padding-left: 15px;
   box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Raleway";
 
   ::placeholder {
     font-family: "Raleway";

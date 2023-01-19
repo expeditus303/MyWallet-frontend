@@ -1,16 +1,34 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function NewIncome() {
+  const [value, setValue] = useState("");
+  const [description, setDescription] = useState("");
+
+  function sendNewIncome(event) {
+    event.preventDefault();
+  }
+
   return (
     <>
       <NewContainer>
         <TopContainer>
           <h1>New income</h1>
         </TopContainer>
-
-        <Input placeholder="value" />
-        <Input placeholder="description" />
-        <Button>Save income</Button>
+        <form onSubmit={sendNewIncome}>
+          <Input
+            type="number"
+            name="value"
+            placeholder="value"
+            inputmode="numeric"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <Input 
+          type="text"
+          placeholder="description" />
+          <Button type="submit">Save income</Button>
+        </form>
       </NewContainer>
     </>
   );
@@ -33,7 +51,6 @@ const TopContainer = styled.div`
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;
-  
 `;
 
 const Input = styled.input`
@@ -45,6 +62,20 @@ const Input = styled.input`
   margin-top: 15px;
   padding-left: 15px;
   box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Raleway";
+
+  /* Chrome, Safari, Edge, Opera */
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  [type="number"] {
+    -moz-appearance: textfield;
+  }
 
   ::placeholder {
     font-family: "Raleway";

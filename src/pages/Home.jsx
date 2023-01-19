@@ -5,7 +5,7 @@ import Registers from "../components/Registers";
 
 export default function Home(props) {
 
-  const { DATA } = props
+  const { registeredData } = props
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function Home(props) {
           <RiLogoutBoxRLine />
         </TopBottomContainer>
 
-        <Registers DATA={DATA}/>
+        <Registers registeredData={registeredData}/>
 
         <TopBottomContainer>
           <NewInOutButton>
