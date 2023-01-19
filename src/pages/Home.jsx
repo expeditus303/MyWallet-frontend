@@ -1,25 +1,11 @@
 import styled from "styled-components";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import Registers from "../components/Registers";
 
-export default function Home() {
-  const DATA = [
-    {
-      date: "16/01",
-      description: "Parafina",
-      value: 12.50,
-    },
-    {
-      date: "17/01",
-      description: "Estacionamento joaca",
-      value: 18,
-    },
-    {
-      date: "18/01",
-      description: "Almoço mãe",
-      value: 39.9,
-    }
-  ];
+export default function Home(props) {
+
+  const { DATA } = props
 
   return (
     <>
@@ -29,23 +15,7 @@ export default function Home() {
           <RiLogoutBoxRLine />
         </TopBottomContainer>
 
-        {/* <Registers>
-          <div id="empty">
-            <p>Não há registros de entrada ou saída</p>
-          </div>
-        </Registers> */}
-
-        <Registers>
-          <div>
-            {DATA.map((d) => (
-            <RegisteredData>
-              <p>{d.date}</p>
-              <p id="description">{d.description}</p>
-              <p>{d.value}</p>
-            </RegisteredData>
-            ))}
-          </div>
-        </Registers>
+        <Registers DATA={DATA}/>
 
         <TopBottomContainer>
           <NewInOutButton>
@@ -82,52 +52,9 @@ const TopBottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  font-family: "Raleway";
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;
-`;
-
-const Registers = styled.div`
-  margin-top: 22px;
-  width: 100%;
-  height: 446px;
-  border-radius: 5px;
-  border-style: none;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  div#empty {
-    width: 180px;
-
-    p {
-      font-family: "Raleway";
-      font-weight: 400;
-      font-size: 20px;
-      text-align: center;
-    }
-  }
-
-  div {
-    width: 100%;
-    background-color: blue;
-    justify-content: space-between;
-  }
-`;
-
-const RegisteredData = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  background-color: deeppink;
-
-  p#description{
-    background-color: aqua;
-    width: 100%;
-  }
 `;
 
 const NewInOutButton = styled.button`
@@ -143,7 +70,6 @@ const NewInOutButton = styled.button`
   align-items: flex-start;
   justify-content: space-around;
 
-  font-family: "Raleway";
   font-weight: 700;
   font-size: 17px;
 

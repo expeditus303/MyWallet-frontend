@@ -32,7 +32,6 @@ const SignUpContainer = styled.div`
 
   p {
     margin-top: 35px;
-    font-family: "Raleway";
     font-weight: 700;
     font-size: 15px;
     color: #ffffff;

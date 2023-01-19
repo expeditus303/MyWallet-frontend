@@ -30,7 +30,6 @@ const TopContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 25px;
 
-  font-family: "Raleway";
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;

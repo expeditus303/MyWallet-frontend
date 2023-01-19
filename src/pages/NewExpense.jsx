@@ -30,7 +30,6 @@ const TopContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 25px;
 
-  font-family: "Raleway";
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;
@@ -48,7 +47,6 @@ const Input = styled.input`
   box-sizing: border-box;
 
   ::placeholder {
-    font-family: "Raleway";
     font-size: 20px;
     color: #4f4f4f;
   }
