@@ -36,11 +36,15 @@ export default function Home() {
         </Registers> */}
 
         <Registers>
-          <RegisteredData>
-            <p>18/01</p>
-            <p>Almoço mãe</p>
-            <p>39.90</p>
-          </RegisteredData>
+          <div>
+            {DATA.map((d) => (
+            <RegisteredData>
+              <p>{d.date}</p>
+              <p id="description">{d.description}</p>
+              <p>{d.value}</p>
+            </RegisteredData>
+            ))}
+          </div>
         </Registers>
 
         <TopBottomContainer>
@@ -107,7 +111,10 @@ const Registers = styled.div`
     }
   }
 
-  div#registered {
+  div {
+    width: 100%;
+    background-color: blue;
+    justify-content: space-between;
   }
 `;
 
@@ -116,6 +123,11 @@ const RegisteredData = styled.div`
   justify-content: space-around;
   width: 100%;
   background-color: deeppink;
+
+  p#description{
+    background-color: aqua;
+    width: 100%;
+  }
 `;
 
 const NewInOutButton = styled.button`
