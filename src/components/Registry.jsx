@@ -1,21 +1,27 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function Registers(props) {
+export default function Registry(props) {
 
   const { registeredData } = props
 
+  const [showEmpty, setShowEmpty] = useState(false)
+
+  console.log(showEmpty)
+
+
   return (
     <>
-      <RegistersContainer>
-        {/* <EmptyRegisters>
+      <RegistryContainer>
+        <EmptyRegistry showEmpty={showEmpty}>
           <div>
-            <p>There are no income or expense records</p>
+            <p>There are no income or expense registers</p>
           </div>
-        </EmptyRegisters> */}
+        </EmptyRegistry>
 
         <RegisteredData>
           {registeredData.map((d) => (
-            <RegisteredDataIndividual>
+            <RegisteredDataIndividual key={d.description}>
               <div>
                 <p id="date">{d.date}</p>
                 <p id="description">{d.description}</p>
@@ -25,16 +31,16 @@ export default function Registers(props) {
           ))}
         </RegisteredData>
 
-        <Balance>
+        <Balance showEmpty={showEmpty}>
           <h3>Balance</h3>
-          <h3>$2849.96</h3>
+          <h3>2849.96</h3>
         </Balance>
-      </RegistersContainer>
+      </RegistryContainer>
     </>
   );
 }
 
-const RegistersContainer = styled.div`
+const RegistryContainer = styled.div`
   margin-top: 22px;
   width: 100%;
   height: 446px;
@@ -50,13 +56,12 @@ const RegistersContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const EmptyRegisters = styled.div`
+const EmptyRegistry = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1b5282;
+  display: ${(props) => (props.showEmpty ? "flex" : "none")};
 
   div {
     width: 200px;
@@ -78,6 +83,10 @@ const RegisteredDataIndividual = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  line-height: 20px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  word-wrap: break-word;
 
   div {
     display: flex;
@@ -90,6 +99,7 @@ const RegisteredDataIndividual = styled.div`
 
   p#description {
     color: #000000;
+    width: 176px;
   }
 
   p#value {
@@ -108,6 +118,10 @@ const RegisteredDataIndividual = styled.div`
 
 const Balance = styled.div`
   width: 100%;
-  display: flex;
+  display: ${(props) => (!props.showEmpty ? "flex" : "none")};
   justify-content: space-between;
+
+  .positive { 
+    color: green;
+  }
 `;

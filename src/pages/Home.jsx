@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
-import Registers from "../components/Registers";
+import Registry from "../components/Registry";
+import { Link } from "react-router-dom";
 
 export default function Home(props) {
 
@@ -15,22 +16,26 @@ export default function Home(props) {
           <RiLogoutBoxRLine />
         </TopBottomContainer>
 
-        <Registers registeredData={registeredData}/>
+        <Registry registeredData={registeredData}/>
 
         <TopBottomContainer>
-          <NewInOutButton>
+          <Link to="/nova-entrada">
+          <CreateButton >
             <div>
               <AiOutlinePlusCircle id="icon" />
             </div>
             <div>New income</div>
-          </NewInOutButton>
+          </CreateButton>
+          </Link>
 
-          <NewInOutButton>
+          <Link to="/nova-saida">
+          <CreateButton >
             <div>
-              <AiOutlineMinusCircle id="icon" />
+              <AiOutlinePlusCircle id="icon" />
             </div>
             <div>New expense</div>
-          </NewInOutButton>
+          </CreateButton>
+          </Link>
         </TopBottomContainer>
       </HomeContainer>
     </>
@@ -57,7 +62,7 @@ const TopBottomContainer = styled.div`
   color: #ffffff;
 `;
 
-const NewInOutButton = styled.button`
+const CreateButton = styled.button`
   margin-top: 15px;
   width: 155px;
   height: 114px;
@@ -72,7 +77,7 @@ const NewInOutButton = styled.button`
 
   font-weight: 700;
   font-size: 17px;
-
+  font-family: "Raleway";
   color: #ffffff;
 
   div {

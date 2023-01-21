@@ -1,12 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function NewIncome() {
+export default function NewIncome(props) {
+  const { registeredData, setRegisteredData } = props;
+
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
 
+  const navigate = useNavigate()
+
   function sendNewIncome(event) {
     event.preventDefault();
+
+    const daysjs = require("dayjs");
+
+    const today = (daysjs().format("DD-MM"))
+
+    const newIncome = {
+      date: today,
+      description: description,
+      value: Number(value),
+      type: "income",
+    };
+
+    const newArray = [...registeredData, newIncome]
+    
+    setRegisteredData(newArray)
+
+    navigate("/home")
   }
 
   return (
@@ -20,13 +42,16 @@ export default function NewIncome() {
             type="number"
             name="value"
             placeholder="value"
-            inputmode="numeric"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Input 
-          type="text"
-          placeholder="description" />
+          <Input
+            type="text"
+            name="description"
+            placeholder="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <Button type="submit">Save income</Button>
         </form>
       </NewContainer>

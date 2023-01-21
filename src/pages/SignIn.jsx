@@ -1,12 +1,37 @@
+import axios from "axios";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { URL } from "../constants/URL";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("teste");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function login(event) {
+  const navigate = useNavigate()
+
+  async function login(event) {
     event.preventDefault();
+
+    const body = {email}
+
+    const header = {
+      headers: {
+        password
+      }
+    }
+
+    try {
+      const response = await axios.post(URL + "sign-in", body, header)
+      console.log(response.data.token)
+    } catch (error) {
+      alert(error.response.data)
+    }
+
+  }
+
+  function success() {
+    navigate("/home")
   }
 
   return (
@@ -31,7 +56,9 @@ export default function SignIn() {
           <Button type="submit">Sign In</Button>
         </form>
 
-        <p>First time? $ign Up!</p>
+        <Link to="/cadastro">
+          First time? $ign Up!
+        </Link>
       </SignInContainer>
     </>
   );
@@ -56,7 +83,7 @@ const SignInContainer = styled.div`
     align-items: center;
   }
 
-  p {
+  a {
     margin-top: 35px;
     font-weight: 700;
     font-size: 15px;

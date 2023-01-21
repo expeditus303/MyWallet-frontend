@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SignUP() {
@@ -11,7 +12,9 @@ export default function SignUP() {
         <Input placeholder="confirm your password" />
         <Button>Sign Up</Button>
 
-        <p>Have an account already? $ign In!</p>
+        <Link to="/">
+          <a>First time? $ign Up!</a>
+        </Link>
       </SignUpContainer>
     </>
   );
@@ -30,7 +33,7 @@ const SignUpContainer = styled.div`
     margin-bottom: 10px;
   }
 
-  p {
+  a {
     margin-top: 35px;
     font-weight: 700;
     font-size: 15px;

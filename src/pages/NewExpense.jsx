@@ -1,16 +1,59 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function NewExpense() {
+export default function NewExpense(props) {
+  const { registeredData, setRegisteredData } = props;
+
+  const [value, setValue] = useState("");
+  const [description, setDescription] = useState("");
+
+  const navigate = useNavigate()
+
+  function sendNewExpense(event) {
+    event.preventDefault();
+
+    const daysjs = require("dayjs");
+
+    const today = (daysjs().format("DD-MM"))
+
+    const newExpense = {
+      date: today,
+      description: description,
+      value: Number(value),
+      type: "expense",
+    };
+
+    const newArray = [...registeredData, newExpense]
+    
+    setRegisteredData(newArray)
+
+    navigate("/home")
+  }
+
   return (
     <>
       <NewContainer>
         <TopContainer>
           <h1>New expense</h1>
         </TopContainer>
-
-        <Input placeholder="value" />
-        <Input placeholder="description" />
-        <Button>Save expense</Button>
+        <form onSubmit={sendNewExpense}>
+          <Input
+            type="number"
+            name="value"
+            placeholder="value"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <Input
+            type="text"
+            name="description"
+            placeholder="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Button type="submit">Save expense</Button>
+        </form>
       </NewContainer>
     </>
   );
@@ -48,18 +91,19 @@ const Input = styled.input`
   font-family: "Raleway";
 
   /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
   /* Firefox */
-  input[type="number"] {
+  [type="number"] {
     -moz-appearance: textfield;
   }
 
   ::placeholder {
+    font-family: "Raleway";
     font-size: 20px;
     color: #4f4f4f;
   }

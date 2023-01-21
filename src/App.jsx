@@ -11,9 +11,7 @@ import SignUP from "./pages/SignUp";
 import { DATA_REGISTERS } from "./DATA";
 
 function App() {
-  
-  const [registeredData, setRegisteredData] = useState(DATA_REGISTERS)
-  
+  const [registeredData, setRegisteredData] = useState(DATA_REGISTERS);
 
   return (
     <>
@@ -21,11 +19,30 @@ function App() {
         <GlobalStyle />
         <Body>
           <Routes>
-            <Route path="/" element={<SignIn />}/>
-            <Route path="/cadastro" element={<SignUP />}/>
-            <Route path="/home" element={<Home registeredData={registeredData} />}/>
-            <Route path="/nova-entrada" element={<NewIncome registeredData={registeredData} setRegisteredData={setRegisteredData}/>}/>
-            <Route path="/nova-saida" element={<NewExpense /> }/>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/cadastro" element={<SignUP />} />
+            <Route
+              path="/home"
+              element={<Home registeredData={registeredData} />}
+            />
+            <Route
+              path="/nova-entrada"
+              element={
+                <NewIncome
+                  registeredData={registeredData}
+                  setRegisteredData={setRegisteredData}
+                />
+              }
+            />
+            <Route
+              path="/nova-saida"
+              element={
+                <NewExpense
+                  registeredData={registeredData}
+                  setRegisteredData={setRegisteredData}
+                />
+              }
+            />
           </Routes>
         </Body>
       </BrowserRouter>
@@ -47,4 +64,12 @@ const Body = styled.div`
   align-items: center;
 
   font-family: "Raleway";
+
+  a {
+    text-decoration: none;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
 `;
