@@ -1,21 +1,31 @@
-import { useState } from "react";
+import { dblClick } from "@testing-library/user-event/dist/click";
+import axios from "axios";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { URL } from "../constants/URL";
+import { LoginContext } from "../contexts/LoginContext";
 
 export default function NewIncome(props) {
-  const { registeredData, setRegisteredData } = props;
+  const { token } = useContext(LoginContext);
 
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
 
   const navigate = useNavigate()
 
-  function sendNewIncome(event) {
+  async function sendNewIncome(event) {
     event.preventDefault();
 
     const daysjs = require("dayjs");
 
     const today = (daysjs().format("DD-MM"))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     const newIncome = {
       date: today,
@@ -24,9 +34,11 @@ export default function NewIncome(props) {
       type: "income",
     };
 
-    const newArray = [...registeredData, newIncome]
-    
-    setRegisteredData(newArray)
+    try {
+      await axios.post(URL + "new-transaction", newIncome, config)
+    } catch (error) {
+      
+    }
 
     navigate("/home")
   }

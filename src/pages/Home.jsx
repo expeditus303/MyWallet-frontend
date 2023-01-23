@@ -2,39 +2,90 @@ import styled from "styled-components";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import Registry from "../components/Registry";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { LoginContext } from "../contexts/LoginContext";
+import axios from "axios";
+import { URL } from "../constants/URL";
 
 export default function Home(props) {
+  const { token, setToken } = useContext(LoginContext);
 
-  const { registeredData } = props
+  const { registeredData, setRegisteredData } = props;
+
+  const [showEmpty, setShowEmpty] = useState(false);
+
+  const [userName, setUserName] = useState("")
+
+  const navigate = useNavigate();
+
+  console.log(token)
+
+  useEffect(() => {
+
+    async function getData() {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      };
+
+
+      try {
+        const answer = await axios.get(URL + "registry", config);
+
+        if (answer.data.length < 2) setShowEmpty(true);
+
+        setRegisteredData(answer.data);
+        
+        setUserName(answer.data[0])
+
+      } catch (error) {
+        if(error.request.status === 401) {
+          navigate("/")
+        }
+
+        console.log(error)
+      }
+    }
+    getData();
+  }, []);
+
+  function exit() {
+    setToken(null)
+    sessionStorage.setItem("tokenLocal", null)
+    navigate("/")
+  }
 
   return (
     <>
       <HomeContainer>
         <TopBottomContainer>
-          <h1>Hello, World</h1>
-          <RiLogoutBoxRLine />
+          <h1>Hello, {userName}</h1>
+          <a>
+            <RiLogoutBoxRLine onClick={exit}/>
+          </a>
         </TopBottomContainer>
 
-        <Registry registeredData={registeredData}/>
+        <Registry registeredData={registeredData} setRegisteredData={setRegisteredData} showEmpty={showEmpty} setShowEmpty={setShowEmpty} />
 
         <TopBottomContainer>
           <Link to="/nova-entrada">
-          <CreateButton >
-            <div>
-              <AiOutlinePlusCircle id="icon" />
-            </div>
-            <div>New income</div>
-          </CreateButton>
+            <CreateButton>
+              <div>
+                <AiOutlinePlusCircle id="icon" />
+              </div>
+              <div>New income</div>
+            </CreateButton>
           </Link>
 
           <Link to="/nova-saida">
-          <CreateButton >
-            <div>
-              <AiOutlinePlusCircle id="icon" />
-            </div>
-            <div>New expense</div>
-          </CreateButton>
+            <CreateButton>
+              <div>
+                <AiOutlinePlusCircle id="icon" />
+              </div>
+              <div>New expense</div>
+            </CreateButton>
           </Link>
         </TopBottomContainer>
       </HomeContainer>
@@ -60,6 +111,10 @@ const TopBottomContainer = styled.div`
   font-weight: 700;
   font-size: 26px;
   color: #ffffff;
+
+  a:hover {
+    cursor: pointer;
+  }
 `;
 
 const CreateButton = styled.button`

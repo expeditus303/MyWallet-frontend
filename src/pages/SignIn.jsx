@@ -1,10 +1,15 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { URL } from "../constants/URL";
+import { LoginContext } from "../contexts/LoginContext";
 
 export default function SignIn() {
+  
+  const { token, setToken } = useContext(LoginContext);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,23 +20,26 @@ export default function SignIn() {
 
     const body = {email}
 
-    const header = {
+    const config = {
       headers: {
         password
       }
     }
 
     try {
-      const response = await axios.post(URL + "sign-in", body, header)
-      console.log(response.data.token)
+      const answer = await axios.post(URL + "sign-in", body, config)
+
+      success(answer)
     } catch (error) {
       alert(error.response.data)
     }
 
   }
 
-  function success() {
+  function success(answer) {
     navigate("/home")
+    sessionStorage.setItem("tokenLocal", answer.data.token)
+    setToken(sessionStorage.getItem("tokenLocal"))
   }
 
   return (

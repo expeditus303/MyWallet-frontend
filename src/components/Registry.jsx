@@ -1,15 +1,41 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { URL } from "../constants/URL";
+import { LoginContext } from "../contexts/LoginContext";
 
 export default function Registry(props) {
+  const { token } = useContext(LoginContext);
 
-  const { registeredData } = props
+  const { registeredData, setRegisteredData, showEmpty, setShowEmpty } = props;
 
-  const [showEmpty, setShowEmpty] = useState(false)
+  let balance;
+  let registry = [];
 
-  console.log(showEmpty)
+  if (registeredData.length > 1) {
+    registry = registeredData[1];
+    balance = registeredData[2].map((e) => e.subtotal);
+  }
+
+  async function deleteTransaction(id) {
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    };
 
 
+    try {
+      const answer = await axios.delete(URL + `delete/${id}`, config);
+
+      if (answer.data.length === 0) setShowEmpty(true);
+
+      setRegisteredData(answer.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <RegistryContainer>
@@ -20,20 +46,26 @@ export default function Registry(props) {
         </EmptyRegistry>
 
         <RegisteredData>
-          {registeredData.map((d) => (
-            <RegisteredDataIndividual key={d.description}>
+          {registry.map((d) => (
+            <RegisteredDataIndividual key={d._id}>
               <div>
                 <p id="date">{d.date}</p>
                 <p id="description">{d.description}</p>
               </div>
-              <p id="value" className={d.type == "income" ? "income" : "expense"}>{d.value.toFixed(2)}</p>
+              <p
+                id="value"
+                className={d.type == "income" ? "income" : "expense"}
+              >
+                {d.value}
+              </p>
+              <button onClick={() => deleteTransaction(d._id)}>x</button>
             </RegisteredDataIndividual>
           ))}
         </RegisteredData>
 
-        <Balance showEmpty={showEmpty}>
+        <Balance showEmpty={showEmpty} balance={balance}>
           <h3>Balance</h3>
-          <h3>2849.96</h3>
+          <h3 id="balance">{balance}</h3>
         </Balance>
       </RegistryContainer>
     </>
@@ -77,6 +109,14 @@ const EmptyRegistry = styled.div`
 const RegisteredData = styled.div`
   width: 100%;
   font-size: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none; /* Firefox */
 `;
 
 const RegisteredDataIndividual = styled.div`
@@ -99,7 +139,7 @@ const RegisteredDataIndividual = styled.div`
 
   p#description {
     color: #000000;
-    width: 176px;
+    width: 156px;
   }
 
   p#value {
@@ -114,14 +154,36 @@ const RegisteredDataIndividual = styled.div`
   p.income {
     color: green;
   }
+
+  button {
+    width: 15px;
+    border: none;
+    font-family: "Raleway";
+    font-weight: 400;
+    font-size: 16px;
+    color: #c6c6c6;
+  }
 `;
 
 const Balance = styled.div`
   width: 100%;
   display: ${(props) => (!props.showEmpty ? "flex" : "none")};
   justify-content: space-between;
+  font-weight: 700;
+  margin-top: 8px;
+  #balance {
+    color: ${(props) => {
+      if (!props.balance) {
+        return "black";
+      } else if (props.balance < 0) {
+        return "red";
+      } else {
+        return "green";
+      }
+    }};
+  }
 
-  .positive { 
+  .positive {
     color: green;
   }
 `;

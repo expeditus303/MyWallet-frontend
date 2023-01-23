@@ -1,19 +1,81 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { URL } from "../constants/URL";
 
 export default function SignUP() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  async function register(event) {
+    event.preventDefault();
+
+    const body = {
+      name,
+      email
+    };
+
+    const config = {
+      headers: {
+        password,
+        confirmPassword
+      }
+    }
+
+    try {
+      await axios.post(URL + "sign-up", body, config);
+
+      alert(`Welcome to MyWallet ${name}!`);
+
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
+
   return (
     <>
       <SignUpContainer>
         <h1>MyWallet</h1>
-        <Input placeholder="name" />
-        <Input placeholder="e-mail" />
-        <Input placeholder="password" />
-        <Input placeholder="confirm your password" />
-        <Button>Sign Up</Button>
+        <form onSubmit={register}>
+          <Input
+            type="text"
+            name="name"
+            placeholder="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            type="email"
+            name="email"
+            placeholder="e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            type="password"
+            name="confirm-password"
+            placeholder="confirm your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Button>Sign Up</Button>
+        </form>
 
         <Link to="/">
-          <a>First time? $ign Up!</a>
+          Already have an account? $ign In!
         </Link>
       </SignUpContainer>
     </>
@@ -33,6 +95,12 @@ const SignUpContainer = styled.div`
     margin-bottom: 10px;
   }
 
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   a {
     margin-top: 35px;
     font-weight: 700;
@@ -50,6 +118,8 @@ const Input = styled.input`
   margin-top: 15px;
   padding-left: 15px;
   box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Raleway";
 
   ::placeholder {
     font-family: "Raleway";
@@ -60,6 +130,7 @@ const Input = styled.input`
   :focus::placeholder {
     color: transparent;
   }
+
 `;
 
 const Button = styled.button`

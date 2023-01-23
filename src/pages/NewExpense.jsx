@@ -1,21 +1,30 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { URL } from "../constants/URL";
+import { LoginContext } from "../contexts/LoginContext";
 
 export default function NewExpense(props) {
-  const { registeredData, setRegisteredData } = props;
+  const { token } = useContext(LoginContext);
 
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
 
   const navigate = useNavigate()
 
-  function sendNewExpense(event) {
+  async function sendNewExpense(event) {
     event.preventDefault();
 
     const daysjs = require("dayjs");
 
     const today = (daysjs().format("DD-MM"))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     const newExpense = {
       date: today,
@@ -24,9 +33,11 @@ export default function NewExpense(props) {
       type: "expense",
     };
 
-    const newArray = [...registeredData, newExpense]
-    
-    setRegisteredData(newArray)
+    try {
+      await axios.post(URL + "new-transaction", newExpense, config)
+    } catch (error) {
+      
+    }
 
     navigate("/home")
   }
