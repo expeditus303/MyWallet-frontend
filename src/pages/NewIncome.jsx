@@ -36,7 +36,7 @@ export default function NewIncome(props) {
     try {
       await axios.post(URL + "new-transaction", newIncome, config)
     } catch (error) {
-      
+      console.log(error)
     }
 
     navigate("/home")

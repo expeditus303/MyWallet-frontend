@@ -19,7 +19,6 @@ export default function Home(props) {
 
   const navigate = useNavigate();
 
-  console.log(token)
 
   useEffect(() => {
 
