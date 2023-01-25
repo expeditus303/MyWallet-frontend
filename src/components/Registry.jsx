@@ -9,22 +9,27 @@ export default function Registry(props) {
 
   const { registeredData, setRegisteredData, showEmpty, setShowEmpty } = props;
 
+  const [showOptions, setShowOptions] = useState(false);
+
+  const [idSelected, setIdSelected] = useState(null)
+
+
   let balance;
   let registry = [];
+
 
   if (registeredData.length > 1) {
     registry = registeredData[1];
     balance = registeredData[2].map((e) => e.subtotal);
   }
 
-  async function deleteTransaction(id) {
 
+  async function deleteTransaction(id) {
     const config = {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     };
-
 
     try {
       const answer = await axios.delete(URL + `delete/${id}`, config);
@@ -32,8 +37,20 @@ export default function Registry(props) {
       if (answer.data.length === 0) setShowEmpty(true);
 
       setRegisteredData(answer.data);
+      setShowOptions(false)
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  }
+
+  function selected(id) {
+    
+    if (idSelected === id) {
+      setIdSelected(null)
+      setShowOptions(false)
+    } else {
+      setIdSelected(id)
+      setShowOptions(true)
     }
   }
   return (
@@ -47,7 +64,13 @@ export default function Registry(props) {
 
         <RegisteredData>
           {registry.map((d) => (
-            <RegisteredDataIndividual key={d._id}>
+            <RegisteredDataIndividual
+              key={d._id}
+              onClick={() => selected(d._id)}
+              id={d._id}
+              idSelected={idSelected}
+              className={d._id == idSelected ? "selected" : ""}
+            >
               <div>
                 <p id="date">{d.date}</p>
                 <p id="description">{d.description}</p>
@@ -58,15 +81,20 @@ export default function Registry(props) {
               >
                 {d.value}
               </p>
-              <button onClick={() => deleteTransaction(d._id)}>x</button>
             </RegisteredDataIndividual>
           ))}
         </RegisteredData>
 
-        <Balance showEmpty={showEmpty} balance={balance}>
-          <h3>Balance</h3>
-          <h3 id="balance">{balance}</h3>
-        </Balance>
+        <div>
+          <Options showOptions={showOptions}>
+            <button id="edit">Edit</button>
+            <button id="delete" onClick={() => deleteTransaction(idSelected)}>Delete</button>
+          </Options>
+          <Balance showEmpty={showEmpty} balance={balance}>
+            <h3>Balance</h3>
+            <h3 id="balance">{balance}</h3>
+          </Balance>
+        </div>
       </RegistryContainer>
     </>
   );
@@ -86,6 +114,10 @@ const RegistryContainer = styled.div`
 
   padding: 23px 15px 10px;
   box-sizing: border-box;
+
+  div {
+    width: 100%;
+  }
 `;
 
 const EmptyRegistry = styled.div`
@@ -127,6 +159,11 @@ const RegisteredDataIndividual = styled.div`
   margin-bottom: 15px;
   font-size: 16px;
   word-wrap: break-word;
+  border-radius: 5px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+  border: ${(props) => (props.id == props.idSelected ? "solid 3px #a328d6;" : "none")};
+
 
   div {
     display: flex;
@@ -165,6 +202,33 @@ const RegisteredDataIndividual = styled.div`
   }
 `;
 
+const Options = styled.div`
+  background-color: white;
+  width: 100%;
+  display: ${(props) => (props.showOptions ? "flex" : "none")};
+  justify-content: space-between;
+
+  button {
+    width: 49%;
+    border-style: none;
+    color: white;
+    font-family: "Raleway";
+    font-size: 14px;
+    font-weight: 700;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 6px 0px;
+  }
+
+  #edit {
+    background-color: #a328d6;
+  }
+
+  #delete {
+    background-color: red;
+  }
+`;
+
 const Balance = styled.div`
   width: 100%;
   display: ${(props) => (!props.showEmpty ? "flex" : "none")};
@@ -173,7 +237,7 @@ const Balance = styled.div`
   margin-top: 8px;
   #balance {
     color: ${(props) => {
-      if (!props.balance) {
+      if (!props.balance || props.balance === 0) {
         return "black";
       } else if (props.balance < 0) {
         return "red";
