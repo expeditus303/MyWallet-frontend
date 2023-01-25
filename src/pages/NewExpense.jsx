@@ -27,7 +27,6 @@ export default function NewExpense(props) {
     }
 
     const newExpense = {
-      date: today,
       description: description,
       value: Number(value),
       type: "expense",

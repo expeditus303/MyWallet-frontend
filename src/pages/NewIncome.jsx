@@ -28,7 +28,6 @@ export default function NewIncome(props) {
     }
 
     const newIncome = {
-      date: today,
       description: description,
       value: Number(value),
       type: "income",
