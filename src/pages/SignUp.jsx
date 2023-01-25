@@ -86,12 +86,12 @@ const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 160px;
 
   h1 {
     font-family: "Silkscreen", cursive;
     font-size: 32px;
     color: #ffffff;
+    margin-top: 20px;
     margin-bottom: 10px;
   }
 
@@ -106,6 +106,7 @@ const SignUpContainer = styled.div`
     font-weight: 700;
     font-size: 15px;
     color: #ffffff;
+    margin-bottom: 20px;
   }
 `;
 

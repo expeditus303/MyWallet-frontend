@@ -94,11 +94,10 @@ export default function Home(props) {
 }
 
 const HomeContainer = styled.div`
-  height: 100%;
+  height: 90%;
   width: 326px;
   margin-top: 25px;
   margin-bottom: 16px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;

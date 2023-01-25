@@ -101,7 +101,7 @@ export default function Registry(props) {
 }
 
 const RegistryContainer = styled.div`
-  margin-top: 22px;
+  margin-top: 8px;
   width: 100%;
   height: 446px;
   border-radius: 5px;

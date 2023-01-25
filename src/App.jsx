@@ -59,7 +59,7 @@ function App() {
 export default App;
 
 const Body = styled.div`
-  height: 100%;
+  height: 100vh;
   /* width: 375px; */
   width: 100%;
   margin: auto;
@@ -68,6 +68,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   font-family: "Raleway";
 
