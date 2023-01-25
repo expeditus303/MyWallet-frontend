@@ -59,9 +59,9 @@ function App() {
 export default App;
 
 const Body = styled.div`
-  height: 100vh;
-  width: 375px;
-  /* width: 100%; */
+  height: 100%;
+  /* width: 375px; */
+  width: 100%;
   margin: auto;
   background-color: #8c11be;
 
